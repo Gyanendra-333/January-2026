@@ -48,3 +48,22 @@ class LinkedList:
             elements.append(current.info)
             current = current.next
         print(" -> ".join(map(str, elements)))
+
+
+def delete_value(self, key):
+    temp = self.head
+
+    if temp and temp.data == key:
+        self.head = temp.next
+        return
+
+    prev = None
+    while temp and temp.data != key:
+        prev = temp
+        temp = temp.next
+
+    if temp is None:
+        print("Value not found")
+        return
+
+    prev.next = temp.next
