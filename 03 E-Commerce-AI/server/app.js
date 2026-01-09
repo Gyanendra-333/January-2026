@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 import { createTables } from './utils/createTable.js';
+import { ErrorMiddleware } from './middleware/errorMidleware.js';
 
 const app = express();
 
@@ -23,5 +24,7 @@ app.use(fileUpload({
 }));
 
 createTables();
+app.use(ErrorMiddleware)
+
 
 export default app;
