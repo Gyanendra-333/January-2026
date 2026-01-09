@@ -14,7 +14,7 @@ export async function createProductTable() {
                 image JSONB DEFAULT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+                FOREIGN KEY (created_at) REFERENCES users(id) ON DELETE SET NULL
             );
         `;
         await database.query(query);

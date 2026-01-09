@@ -1,9 +1,9 @@
 import database from "../database/db.js";
 
-export async function createOrdersTable() {
+export async function createOrdersItemTable() {
     try {
         const query = `
-            CREATE TABLE IF NOT EXISTS orders (
+            CREATE TABLE IF NOT EXISTS order_items (
                 id SERIAL PRIMARY KEY,
                 order_id INT REFERENCES orders(id) ON DELETE CASCADE,
                 product_id INT REFERENCES products(id) ON DELETE CASCADE,
