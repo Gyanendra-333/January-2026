@@ -15,8 +15,8 @@ export const createTables = async () => {
         await createOrdersItemTable();
         await createShippingInfoTable();
         await createPaymentTable();
-        console.log("All tables created successfully.");
+        console.log("All Tables Created successfully ✅");
     } catch (error) {
-        console.error("Error creating tables:", error);
+        console.error("Error creating tables ❌:", error);
     }
 };

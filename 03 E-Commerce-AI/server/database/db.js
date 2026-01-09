@@ -11,7 +11,7 @@ const database = new Client({
 
 try {
     await database.connect();
-    console.log("Database Connected Successfully ✅.");
+    console.log("Database Connected Successfully ✅");
 } catch (error) {
     console.error("Error connecting to the database ❌.", error);
     process.exit(1);

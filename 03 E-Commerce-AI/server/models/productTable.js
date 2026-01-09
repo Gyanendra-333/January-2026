@@ -12,14 +12,15 @@ export async function createProductTable() {
                 stock INT DEFAULT 0,
                 category VARCHAR(100),
                 image JSONB DEFAULT NULL,
+
+                created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (created_at) REFERENCES users(id) ON DELETE SET NULL
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
         await database.query(query);
     } catch (error) {
-        console.error('Error creating product table:', error);
+        console.error("Error creating product table:", error.message);
         process.exit(1);
     }
 }
