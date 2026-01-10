@@ -19,6 +19,7 @@ export const register = catchAsyncError(async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     // Insert new user into database
     await database.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name, email, hashedPassword]);
+
     generateToken(user.rows[0], "User Registered Successfully", res, 201);
 
 });
