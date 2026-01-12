@@ -6,6 +6,9 @@ import fileUpload from 'express-fileupload';
 import { createTables } from './utils/createTable.js';
 import { ErrorMiddleware } from './middleware/errorMidleware.js';
 
+// routes 
+import authRouter from './routes/authRoutes.js';
+
 const app = express();
 
 config({ path: './config/config.env' });
@@ -22,6 +25,8 @@ app.use(cookieParser());
 app.use(fileUpload({
     useTempFiles: true,
 }));
+
+app.use("/api/v1/auth", authRouter);
 
 createTables();
 app.use(ErrorMiddleware)
