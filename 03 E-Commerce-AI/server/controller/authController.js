@@ -3,6 +3,7 @@ import { catchAsyncError } from "../middleware/catchAsyncError.js";
 import database from "../database/db.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwtToken.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 // Register 
 export const register = catchAsyncError(async (req, res, next) => {
@@ -116,6 +117,7 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
     if (!isPasswordValid) {
         return next(new ErrorHandler("Old password is incorrect", 401));
     }
+
     // Hash new password and update
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     await database.query("UPDATE users SET password = ? WHERE id = ?", [hashedNewPassword, userId]);
@@ -124,3 +126,34 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
         message: "Password updated successfully"
     });
 });
+
+
+// Update Profile 
+export const updateProfile = catchAsyncError(async (req, res, next) => {
+    const userId = req.user.id;
+    const { name, email } = req.body;
+    // Update user details in database
+    await database.query("UPDATE users SET name = ?, email = ? WHERE id = ?", [name, email, userId]);
+
+    let avatarData = [];
+    if (req.file) {
+        // Upload new avatar to Cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale"
+        });
+        avatarData = {
+            public_id: result.public_id,
+            url: result.secure_url
+        };
+    }
+    // If avatar is updated, save avatar info to database
+    if (avatarData.length !== 0) {
+        await database.query("UPDATE users SET avatar_public_id = ?, avatar_url = ? WHERE id = ?", [avatarData.public_id, avatarData.url, userId]);
+    }
+    res.status(200).json({
+        success: true,
+        message: "Profile updated successfully"
+    });
+}); 
