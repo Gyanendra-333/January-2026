@@ -58,6 +58,15 @@ export const getProduct = catchAsyncError(async (req, res, next) => {
     }
 
     // search 
+    if (search) {
+        query += " AND name LIKE ?";
+        params.push(`%${search}%`);
+    }
+    const [products] = await database.query(query, params);
+    res.status(200).json({
+        success: true,
+        products
+    });
 });
 
 // update product 
