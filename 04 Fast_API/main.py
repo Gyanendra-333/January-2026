@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from mockData import products
 
 app = FastAPI(title="My First FastAPI Server")
 
@@ -21,3 +22,27 @@ async def gyan():
     return {
         "message": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints."
     }
+
+
+@app.get("/products")
+async def get_products():
+    return {"products": products}
+
+
+# get query  params example
+@app.get("/products/{product_id}")
+async def get_product(product_id: int):
+    for product in products:
+        if product["id"] == product_id:
+            return {"product": product}
+    return {"message": "Product not found"}
+
+
+# path param example
+@app.get("/search/")
+async def search_products(q: str = ""):
+    results = []
+    for product in products:
+        if q.lower() in product["name"].lower():
+            results.append(product)
+    return {"results": results}
