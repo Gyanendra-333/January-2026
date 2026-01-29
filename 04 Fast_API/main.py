@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from mockData import products
+from dtos import ProductDTO
 
 app = FastAPI(title="My First FastAPI Server")
 
@@ -46,3 +47,10 @@ async def search_products(q: str = ""):
         if q.lower() in product["name"].lower():
             results.append(product)
     return {"results": results}
+
+
+# post example
+@app.post("/products/")
+async def create_product(product: ProductDTO):
+    products.append(product.dict())
+    return {"message": "Product created successfully", "product": product}
