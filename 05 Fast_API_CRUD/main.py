@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from src.utils.db import Base, engine
+from src.tasks.models import TaskModal
 
-app = FastAPI()
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="FastAPI CRUD Application")
 
 
 @app.get("/")

@@ -1,15 +1,16 @@
-from fastapi import FastAPI
-import asyncio
-from sqlalchemy.exc import SQLAlchemyError
-from src.utils.db import engine  # your db.py
-
-app = FastAPI()
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from src.utils.settings import settings
 
 
-@app.on_event("startup")
-async def startup_event():
+Base = declarative_base()
+engine = create_engine(settings.DB_CONNECTION, pool_pre_ping=True)
+LocalSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+def get_db():
+    db = LocalSession()
     try:
-        async with engine.begin() as conn:
-            await conn.run_sync(lambda sync_conn: print("✅ Database connected successfully!"))
-    except SQLAlchemyError as e:
-        print("❌ Database connection failed:", e)
+        yield db
+    finally:
+        db.close()
