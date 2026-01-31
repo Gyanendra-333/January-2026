@@ -26,3 +26,24 @@ def get_all_tasks(db: Session):
 def get_one_task(task_id: int, db: Session):
     task = db.query(TaskModal).filter(TaskModal.id == task_id).first()
     return {"status": "success", "data": task}
+
+
+# update task function
+def update_task(task_id: int, body: TaskSchema, db: Session):
+    data = body.model_dump()
+    task = db.query(TaskModal).filter(TaskModal.id == task_id).first()
+    task.title = data["title"]
+    task.description = data["description"]
+    task.is_completed = data["is_completed"]
+    db.commit()
+    print(task)
+    return {"status": "task updated successfully", "data": task}
+
+# delete task function
+
+
+def delete_task(task_id: int, db: Session):
+    task = db.query(TaskModal).filter(TaskModal.id == task_id).first()
+    db.delete(task)
+    db.commit()
+    return {"status": "task deleted successfully"}
