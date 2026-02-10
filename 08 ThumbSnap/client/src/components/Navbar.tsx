@@ -3,7 +3,8 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { navlinks } from "../data/navlinks";
 import type { INavLink } from "../types";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Logo from "../../public/logo.svg";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,9 +17,9 @@ export default function Navbar() {
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
             >
-                <a href="https://prebuiltui.com?utm_source=pixels">
-                    <img className="h-8.5 w-auto" src="/assets/logo.svg" alt="logo" width={130} height={34} />
-                </a>
+                <Link to={"/"}>
+                    <img className="h-8.5 w-auto" src={Logo} alt="logo" width={130} height={34} />
+                </Link>
 
                 <div className="hidden md:flex items-center gap-8 transition duration-500">
                     {navlinks.map((link: INavLink) => (
