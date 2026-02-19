@@ -1,4 +1,3 @@
-import { time } from "console";
 import mongoose, { Document } from "mongoose";
 
 export interface Message extends Document {
