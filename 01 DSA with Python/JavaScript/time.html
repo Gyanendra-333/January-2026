@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Date Time</title>
+    <style>
+        #time {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="time"></div>
+
+    <script>
+        function showTime() {
+            const now = new Date();
+            document.getElementById("time").innerHTML = now.toLocaleString();
+        }
+ 
+        showTime();
+        setInterval(showTime, 1000);
+    </script>
+
+</body>
+
+</html>
