@@ -25,7 +25,7 @@ export default App;
 
 
 import { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';  
+import { View, Text, FlatList } from 'react-native';
 
 function App() {
     const [data, setData] = useState([]);
