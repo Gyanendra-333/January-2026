@@ -8,4 +8,3 @@ elif age == 18:
     print("Abhi 18 ke ho!")
 else:
     print("Tum adult ho")
-
