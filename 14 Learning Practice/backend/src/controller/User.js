@@ -71,6 +71,37 @@ router.post('/login', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+
+    //forgot password
+    router.post('/forgot-password', async (req, res) => {
+        const { email } = req.body;
+
+        try {
+            // check if user exists
+            let user = await User.findOne({ email });
+            if (!user) {
+                return res.status(400).json({ msg: 'User does not exist' });
+            }
+            // create and return jwt token
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+            // send email with token
+            // Implementation for sending email with reset token goes here
+            res.json({ msg: 'Password reset link has been sent to your email' });
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error');
+        }
+    });
+
+    
+
+
+
 });
 
 export default router;
