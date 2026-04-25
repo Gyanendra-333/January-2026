@@ -9,7 +9,6 @@ if age >= 18:
 else:
     print("Tum vote nahi de sakte")
 
-
 x = 10
 print(x > 5)   # True
 print(x == 10)  # True
